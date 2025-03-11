@@ -12,9 +12,9 @@ Algoritmo calcularNotas
 	Dimension imprimible[10,8]
 	
 	
-repetir
-	//menu principal 
-	
+	repetir
+		//menu principal 
+		
 		Escribir "*************** Menu ****************"
 		escribir "1. estudiantes registrados"
 		escribir "2. crear estudiantes"
@@ -39,8 +39,8 @@ repetir
 		Esperar Tecla
 		Borrar Pantalla
 	Hasta Que  eleccion=6
-		
-	FinAlgoritmo
+	
+FinAlgoritmo
 
 //Crea un estudiante (Ulitiza la variable global)
 Funcion CrearEstudiante (estudiantes Por Referencia,  cuenteEstudiantes Por Referencia)
@@ -52,11 +52,11 @@ Funcion CrearEstudiante (estudiantes Por Referencia,  cuenteEstudiantes Por Refe
 					Escribir "Ingrese el código del alumno:"
 				2:
 					Escribir "Ingrese el nombre del alumno:"
-				
+					
 			Fin Segun
 			Leer estudiantes[cuenteEstudiantes,i]
 		Fin Para
-		ImpresionArreglos(estudientes, cuenteEstudiantes, 3, "estudiantes:", "codigo  Nombre ")
+		ImpresionArreglos(estudiantes, cuenteEstudiantes, 2, "estudiantes:", "codigo  Nombre ")
 		Escribir "estudiante registrado con exito!"
 	SiNo
 		Escribir "No es posible crear más estudiantes, llego al limite"
@@ -75,8 +75,8 @@ Funcion asignacionDeNotas (imprimible por referencia, notas Por Referencia, estu
 	
 	Repetir
 		
-		Escribir "Ingrese el código del producto a facturar:"
-		Leer codProd
+		Escribir "Ingrese el código del estudiante:"
+		Leer codEstudiante
 		
 		Escribir "Ingrese nota 1 del estudiante:"
 		Leer nota1
@@ -89,20 +89,26 @@ Funcion asignacionDeNotas (imprimible por referencia, notas Por Referencia, estu
 		
 		Escribir "Ingrese inasistencias del estudiante:"
 		Leer inasistencia
-		
-		
-		
-		
+		si inasistencia>0 entonces
+			Si  inasistencia<10 Entonces
+				sumaTotalInasistencia<-0
+			Fin Si
+			Si inasistencia >10 y inasistencia<15 Entonces
+				sumaTotalInasistencia <- 0.15
+			Fin Si
+			Si inasistencia >15 Entonces
+				sumaTotalInasistencia <- 1
+			Fin Si
+		Fin si 
 		i <- 0
 		
 		Repetir
 			i <- i + 1
-			Si estudiantes[i,1]=codProd Entonces
+			Si estudiantes[i,1]=codEstudiante Entonces
+				codEstudiante<-estudiantes[i,1]
 				nombre <- estudiantes[i,2]
-				nota1 <- notas[i,1]
-				nota2 <- notas[i,2]
-				nota3 <- notas[i,3]
-				inasistencia <- notas[1,4]
+				promedio <- (nota1+nota2+nota3) /3
+				escribir promedio
 			Fin si	
 		Hasta Que estudiantes[i,1]=codEstudiante O i > cuenteEstudiantes
 		
@@ -112,8 +118,7 @@ Funcion asignacionDeNotas (imprimible por referencia, notas Por Referencia, estu
 		imprimible[contador,4] <- ConvertirATexto(nota2)
 		imprimible[contador,5] <- ConvertirATexto(nota3)
 		imprimible[contador,6] <- ConvertirATexto(inasistencia)
-		promedio =((nota1+nota2+nota3)/3)
-		imprimible[contador,7]<- ConvertirATexto(promedio)
+		imprimible[contador,7]<- ConvertirATexto(promedio -sumaTotalInasistencia)
 		
 		
 		contador <- contador + 1
@@ -123,20 +128,9 @@ Funcion asignacionDeNotas (imprimible por referencia, notas Por Referencia, estu
 		
 	Hasta Que salir="si"
 	
-	ImpresionArreglos(imprimible,contador -1 , 4,"el estudiantado", "COD  NOMBRE  P1 P2 P3 INASISTENCIAS NOTA FINAL ")
-	
-	
-	
-	
-	
+	ImpresionArreglos(imprimible,contador -1 , 8,"el estudiantado", "COD  NOMBRE  P1 P2 P3 INASISTENCIAS NOTA FINAL ")
+
 FinFuncion
-
-
-
-
-
-
-
 
 
 //Imprime los usuarios que estan activos en el sistema (Ulitiza la variable global)
@@ -150,4 +144,3 @@ Funcion ImpresionArreglos (Arreglo Por Referencia, TamañoFila, TamañoColum, Titu
 		Escribir ""
 	Fin Para
 FinFuncion
-
